@@ -1,6 +1,7 @@
 // model/User.java
 package com.example.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,15 +11,15 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-
 @AllArgsConstructor
 @Table(name = "users")
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
+    private Long id;
+    private int accountType ;
     private String username;
     private String password;
     private String email;
@@ -71,6 +72,13 @@ public User(){}
         return birthday;
     }
 
+    public int getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(int accountType) {
+        this.accountType = accountType;
+    }
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
