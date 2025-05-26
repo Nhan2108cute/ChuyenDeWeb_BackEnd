@@ -6,3 +6,7 @@ CREATE TABLE users (
                        phone VARCHAR(20),
                        birthday DATE
 );
+ALTER TABLE users ADD COLUMN account_type INT DEFAULT 1;
+UPDATE users SET account_type = 0 WHERE username = 'admin';
+
+
