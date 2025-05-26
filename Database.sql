@@ -8,5 +8,8 @@ CREATE TABLE users (
 );
 ALTER TABLE users ADD COLUMN account_type INT DEFAULT 1;
 UPDATE users SET account_type = 0 WHERE username = 'admin';
-
+UPDATE users SET account_type = 2 WHERE username = 'nhancute2108';
+-- accountType số 0 là Admin
+-- accountType số 1 là Tài khoản thường
+-- accountType số 2 là tài khoản premium
 
