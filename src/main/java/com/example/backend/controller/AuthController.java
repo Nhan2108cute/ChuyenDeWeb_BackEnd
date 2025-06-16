@@ -1,15 +1,19 @@
 package com.example.backend.controller;
 
+import com.example.backend.config.JwtTokenProvider;
 import com.example.backend.model.User;
 import com.example.backend.service.UserServiceImpl;
 import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,11 +21,16 @@ import java.util.Map;
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
-
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
     @Autowired
     private UserRepository userRepository;
+
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    private UserDetailsService userDetailsService; // Quan trọng để lấy UserDetails
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     private UserServiceImpl userService;
@@ -66,19 +75,22 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
         String username = loginRequest.get("username");
         String password = loginRequest.get("password");
-
         User user = userRepository.findByUsername(username).orElse(null);
         if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
             return ResponseEntity.badRequest().body("Tên đăng nhập hoặc mật khẩu không đúng!");
         }
+        System.out.println(username);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        System.out.println("user name"+userDetails.getUsername());
+        String jwtToken = jwtTokenProvider.generateToken(userDetails);
+        // Trả về thông tin + token
+        Map<String, Object> response = new HashMap<>();
+        response.put("token", jwtToken);
+        response.put("id", user.getId());
+        response.put("username", user.getUsername());
+        response.put("accountType", user.getAccountType());
 
-        Map<String, Object> data = Map.of(
-                "id", user.getId(),
-                "username", user.getUsername(),
-                "accountType", user.getAccountType()
-        );
-
-        return ResponseEntity.ok(data);
+        return ResponseEntity.ok(response);
     }
 
     // Có thể thêm API lấy danh sách user để frontend dùng load list, ví dụ:
