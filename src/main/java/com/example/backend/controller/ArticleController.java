@@ -1,11 +1,9 @@
 // controller/ArticleController.java
 package com.example.backend.controller;
 
-import com.example.backend.model.ArticleContent;
 import com.example.backend.model.ArticleDTO;
 import com.example.backend.model.ArticleUpdateDTO;
 import com.example.backend.model.entity.Article;
-import com.example.backend.model.entity.Author;
 import com.example.backend.repository.ArticleContentRepository;
 import com.example.backend.repository.AuthorRepository;
 import com.example.backend.service.ArticleService;
@@ -14,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController

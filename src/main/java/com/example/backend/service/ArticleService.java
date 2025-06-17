@@ -1,7 +1,6 @@
 package com.example.backend.service;
 
-import com.example.backend.model.ArticleContent;
-import com.example.backend.model.ArticleContentDTO;
+import com.example.backend.model.entity.ArticleContent;
 import com.example.backend.model.ArticleUpdateDTO;
 import com.example.backend.model.entity.Article;
 import com.example.backend.model.ArticleDTO;
