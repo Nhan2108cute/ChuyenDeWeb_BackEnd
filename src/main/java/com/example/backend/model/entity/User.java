@@ -1,5 +1,5 @@
 // model/User.java
-package com.example.backend.model;
+package com.example.backend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

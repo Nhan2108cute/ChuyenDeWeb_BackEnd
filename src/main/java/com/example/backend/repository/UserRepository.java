@@ -1,7 +1,7 @@
 // repository/UserRepository.java
 package com.example.backend.repository;
 
-import com.example.backend.model.User;
+import com.example.backend.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

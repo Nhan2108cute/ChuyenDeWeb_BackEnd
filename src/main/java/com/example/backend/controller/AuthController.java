@@ -1,7 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.config.JwtTokenProvider;
-import com.example.backend.model.User;
+import com.example.backend.model.entity.User;
 import com.example.backend.service.UserServiceImpl;
 import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 // service/UserService.java
 package com.example.backend.service;
 
-import com.example.backend.model.User;
+import com.example.backend.model.entity.User;
 import org.springframework.stereotype.Service;
 
 @Service
