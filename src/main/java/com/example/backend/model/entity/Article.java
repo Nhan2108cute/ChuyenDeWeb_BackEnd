@@ -1,4 +1,4 @@
-package com.example.backend.model;
+package com.example.backend.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -34,7 +34,10 @@ public class Article {
     private LocalDateTime updatedAt;
 
     public enum Status {
-        draft, published, archived
+        draft, published, archived;
+        public static Status fromString(String value) {
+            return Status.valueOf(value.toLowerCase());
+        }
     }
 
   public Article(){}

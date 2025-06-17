@@ -1,16 +1,21 @@
 // controller/ArticleController.java
 package com.example.backend.controller;
 
-import com.example.backend.model.Article;
+import com.example.backend.model.ArticleContent;
 import com.example.backend.model.ArticleDTO;
-import com.example.backend.repository.ArticleRepository;
+import com.example.backend.model.ArticleUpdateDTO;
+import com.example.backend.model.entity.Article;
+import com.example.backend.model.entity.Author;
+import com.example.backend.repository.ArticleContentRepository;
 import com.example.backend.repository.AuthorRepository;
 import com.example.backend.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 @RestController
 @RequestMapping("/api/articles")
@@ -19,7 +24,8 @@ public class ArticleController {
 
     @Autowired
    private ArticleService articleService;
-
+    @Autowired
+    private ArticleContentRepository articleContentRepository;
     @Autowired
     private AuthorRepository authorRepository;
 
@@ -46,5 +52,33 @@ public class ArticleController {
 //                    article.getCreatedAt()
 //            );
 //        }).toList();
+
+    @PostMapping
+    public ResponseEntity<?> createArticle(@RequestBody ArticleDTO dto) {
+        articleService.createArticle(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteArticle(@PathVariable Integer id) {
+        try {
+            articleService.deleteArticle(id);
+            return ResponseEntity.ok("Xoá thành công bài viết có ID: " + id);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateArticle(
+            @PathVariable Integer id,
+            @RequestBody ArticleUpdateDTO dto) {
+        try {
+            Article updated = articleService.updateArticle(id, dto);
+            return ResponseEntity.ok(updated);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+
 
 }
