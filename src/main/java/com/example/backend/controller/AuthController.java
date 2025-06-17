@@ -3,6 +3,7 @@ package com.example.backend.controller;
 import com.example.backend.config.JwtTokenProvider;
 import com.example.backend.model.entity.User;
 import com.example.backend.service.UserServiceImpl;
+import com.example.backend.service.UserService;
 import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class AuthController {
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Map<String, Object> userMap) {
