@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
@@ -21,17 +23,17 @@ public class Comment {
     @JoinColumn(name = "article_id")
     private Article article;
 
-    private String contend;
+    private String content;
     @Column(name = "created_at")
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     public Comment() {
     }
-    public Comment(Integer commentId, User user, Article article, String contend, String createdAt) {
+    public Comment(Integer commentId, User user, Article article, String content, LocalDateTime createdAt) {
         this.commentId = commentId;
         this.user = user;
         this.article = article;
-        this.contend = contend;
+        this.content = content;
         this.createdAt = createdAt;
     }
 }
